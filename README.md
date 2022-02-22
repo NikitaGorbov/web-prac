@@ -2,7 +2,7 @@
 
 ## Описание страниц
 
-<img src="img/uml.png" width="600">
+<img src="img/uml.png" width="700">
 
 ### Главная страница
 Условно делится на две части:
@@ -50,7 +50,7 @@
 3. Кнопка 'редактировать'
 
 ## Схема БД
-<img src="img/Web_app.png" width="500">
+<img src="img/Web_app.png" width="700">
 
 
 ## Use cases
