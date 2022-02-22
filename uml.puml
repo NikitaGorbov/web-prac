@@ -1,0 +1,26 @@
+@startuml
+!theme reddress-lightorange
+'skinparam linetype ortho'
+caption Схема навигации
+scale 2.0
+component [Главная страница] as mainPage
+component [Работодатели] as employers
+component [Работодатель] as employer
+component [Соискатели] as applicants
+component [Соискатель] as applicant
+component [Список вакансий] as positions
+component [Вакансия] as position
+component [Список резюме] as cvs
+component [Резюме] as cv
+
+mainPage -d-> positions : Все открытые вакансии
+mainPage -d-> employers : Все работодатели
+mainPage -d-> applicants : Все соискатели
+mainPage -d-> cvs : Все резюме
+cvs -d-> cv: Выбранное резюме
+employers -d-> employer : Выбранный работодатель
+applicants -d-> applicant : Выбранный Соискатель
+applicant <-d-> cv : Резюме соискателя
+employer <-d-> position : Вакансии работодателя
+positions -d-> position : Информация о вакансии
+@enduml
