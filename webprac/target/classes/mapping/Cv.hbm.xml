@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="entity.Cv" table="Cv">
+        <id name="cv_id" type="java.lang.Long">
+            <column name="cv_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="applicant" class="entity.Applicant" fetch="select">
+            <column name="appl_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="objective" class="entity.Position" fetch="select">
+            <column name="objective" not-null="true" />
+        </many-to-one>
+        <property name="work_exp" type="int">
+            <column name="work_exp" length="255" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

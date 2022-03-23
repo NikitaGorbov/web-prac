@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="entity.Company" table="Company">
+        <id name="comp_id" type="java.lang.Long">
+            <column name="comp_id" />
+            <generator class="identity" />
+        </id>
+        <property name="comp_name" type="string">
+            <column name="comp_name" length="255" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="255" not-null="true" />
+        </property>
+        <property name="location" type="string">
+            <column name="location" length="255" not-null="true" />
+        </property>
+        <set name = "previous_job_records" table="Previous_job_record" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="comp_id" not-null="true" />
+        	</key>
+        	<one-to-many class="entity.Previous_job_record" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="entity.Previous_job_record" table="Previous_job_record">
+        <id name="prev_job_record_id" type="java.lang.Long">
+            <column name="prev_job_record_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="applicant" class="entity.Applicant" fetch="select">
+            <column name="appl_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="company" class="entity.Company" fetch="select">
+            <column name="comp_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="position" class="entity.Position" fetch="select">
+            <column name="pos_id" not-null="true" />
+        </many-to-one>
+        <property name="duration" type="int">
+            <column name="duration" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
