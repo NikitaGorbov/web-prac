@@ -3,6 +3,7 @@ package service;
 import bl.HibernateUtil;
 import bl.SessionUtil;
 import dao.CvDAO;
+import entity.Company;
 import entity.Cv;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,9 +36,20 @@ public class CvService extends SessionUtil implements CvDAO {
 	}
 
 	@Override
-	public Cv getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Cv getById(Long id) {
+		Cv cv = null;
+		Session session = null;
+		try {
+			session = openSession();
+			cv = (Cv) session.get(Cv.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return cv;
 	}
 
 	@Override

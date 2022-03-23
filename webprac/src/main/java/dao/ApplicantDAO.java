@@ -8,7 +8,7 @@ import entity.Applicant;
 public interface ApplicantDAO {
 	void add(Applicant company) throws SQLException;
 	List<Applicant> getAll();
-	Applicant getById(int id);
+	Applicant getById(Long id);
 	void update(Applicant company);
 	void remove(Applicant company);
 }

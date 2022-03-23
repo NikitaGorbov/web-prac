@@ -3,6 +3,7 @@ package service;
 import bl.HibernateUtil;
 import bl.SessionUtil;
 import dao.CompanyDAO;
+import entity.Applicant;
 import entity.Company;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,9 +36,20 @@ public class CompanyService extends SessionUtil implements CompanyDAO {
 	}
 
 	@Override
-	public Company getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Company getById(Long id) {
+		Company company = null;
+		Session session = null;
+		try {
+			session = openSession();
+			company = (Company) session.get(Company.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return company;
 	}
 
 	@Override

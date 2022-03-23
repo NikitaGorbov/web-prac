@@ -3,6 +3,7 @@ package service;
 import bl.HibernateUtil;
 import bl.SessionUtil;
 import dao.Previous_job_recordDAO;
+import entity.Position;
 import entity.Previous_job_record;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,9 +36,20 @@ public class Previous_job_recordService extends SessionUtil implements Previous_
 	}
 
 	@Override
-	public Previous_job_record getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Previous_job_record getById(Long id) {
+		Previous_job_record previous_job_record = null;
+		Session session = null;
+		try {
+			session = openSession();
+			previous_job_record = (Previous_job_record) session.get(Previous_job_record.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return previous_job_record;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import entity.Vacancy;
 public interface VacancyDAO {
 	void add(Vacancy vacancy) throws SQLException;
 	List<Vacancy> getAll();
-	Vacancy getById(int id);
+	Vacancy getById(Long id);
 	void update(Vacancy vacancy);
 	void remove(Vacancy vacancy);
 }

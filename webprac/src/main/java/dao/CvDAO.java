@@ -8,7 +8,7 @@ import entity.Cv;
 public interface CvDAO {
 	void add(Cv cv) throws SQLException;
 	List<Cv> getAll();
-	Cv getById(int id);
+	Cv getById(Long id);
 	void update(Cv cv);
 	void remove(Cv cv);
 }

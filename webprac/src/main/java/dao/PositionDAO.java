@@ -8,7 +8,7 @@ import entity.Position;
 public interface PositionDAO {
 	void add(Position position) throws SQLException;
 	List<Position> getAll();
-	Position getById(int id);
+	Position getById(Long id);
 	void update(Position position);
 	void remove(Position position);
 }

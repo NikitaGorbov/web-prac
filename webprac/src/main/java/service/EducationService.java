@@ -3,6 +3,7 @@ package service;
 import bl.HibernateUtil;
 import bl.SessionUtil;
 import dao.EducationDAO;
+import entity.Cv;
 import entity.Education;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,9 +36,20 @@ public class EducationService extends SessionUtil implements EducationDAO {
 	}
 
 	@Override
-	public Education getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Education getById(Long id) {
+		Education education = null;
+		Session session = null;
+		try {
+			session = openSession();
+			education = (Education) session.get(Education.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return education;
 	}
 
 	@Override

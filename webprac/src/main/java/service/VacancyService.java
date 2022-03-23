@@ -3,6 +3,7 @@ package service;
 import bl.HibernateUtil;
 import bl.SessionUtil;
 import dao.VacancyDAO;
+import entity.Previous_job_record;
 import entity.Vacancy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,9 +36,20 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 	}
 
 	@Override
-	public Vacancy getById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vacancy getById(Long id) {
+		Vacancy vacancy = null;
+		Session session = null;
+		try {
+			session = openSession();
+			vacancy = (Vacancy) session.get(Vacancy.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.close();
+			}
+		}
+		return vacancy;
 	}
 
 	@Override

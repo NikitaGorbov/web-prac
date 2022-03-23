@@ -8,7 +8,7 @@ import entity.Previous_job_record;
 public interface Previous_job_recordDAO {
 	void add(Previous_job_record previous_job_record) throws SQLException;
 	List<Previous_job_record> getAll();
-	Previous_job_record getById(int id);
+	Previous_job_record getById(Long id);
 	void update(Previous_job_record previous_job_record);
 	void remove(Previous_job_record previous_job_record);
 }
