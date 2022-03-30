@@ -1,24 +1,22 @@
 package service;
 
-import bl.HibernateUtil;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Session;
+
 import bl.SessionUtil;
 import dao.Previous_job_recordDAO;
-import entity.Position;
 import entity.Previous_job_record;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import org.hibernate.query.Query;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Previous_job_recordService extends SessionUtil implements Previous_job_recordDAO {
 
-	
-    public void add(Previous_job_record previous_job_record) throws SQLException {
+
+    @Override
+	public void add(Previous_job_record previous_job_record) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -31,8 +29,13 @@ public class Previous_job_recordService extends SessionUtil implements Previous_
 
 	@Override
 	public List<Previous_job_record> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Previous_job_record> criteria = builder.createQuery(Previous_job_record.class);
+	    criteria.from(Previous_job_record.class);
+	    List<Previous_job_record> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class Previous_job_recordService extends SessionUtil implements Previous_
 		Session session = null;
 		try {
 			session = openSession();
-			previous_job_record = (Previous_job_record) session.get(Previous_job_record.class, id);
+			previous_job_record = session.get(Previous_job_record.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +57,18 @@ public class Previous_job_recordService extends SessionUtil implements Previous_
 
 	@Override
 	public void update(Previous_job_record previous_job_record) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.update(previous_job_record);
+        closeTransactionSesstion();
 	}
 
 	@Override
 	public void remove(Previous_job_record previous_job_record) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.remove(previous_job_record);
+        closeTransactionSesstion();
 	}
 
 }

@@ -16,5 +16,8 @@
         <property name="work_exp" type="int">
             <column name="work_exp" length="255" not-null="true" />
         </property>
+                <property name="desired_salary" type="int">
+            <column name="desired_salary" length="255" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

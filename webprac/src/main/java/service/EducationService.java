@@ -1,24 +1,22 @@
 package service;
 
-import bl.HibernateUtil;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Session;
+
 import bl.SessionUtil;
 import dao.EducationDAO;
-import entity.Cv;
 import entity.Education;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import org.hibernate.query.Query;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EducationService extends SessionUtil implements EducationDAO {
 
-	
-    public void add(Education education) throws SQLException {
+
+    @Override
+	public void add(Education education) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -31,8 +29,13 @@ public class EducationService extends SessionUtil implements EducationDAO {
 
 	@Override
 	public List<Education> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Education> criteria = builder.createQuery(Education.class);
+	    criteria.from(Education.class);
+	    List<Education> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class EducationService extends SessionUtil implements EducationDAO {
 		Session session = null;
 		try {
 			session = openSession();
-			education = (Education) session.get(Education.class, id);
+			education = session.get(Education.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +57,18 @@ public class EducationService extends SessionUtil implements EducationDAO {
 
 	@Override
 	public void update(Education education) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.update(education);
+        closeTransactionSesstion();
 	}
 
 	@Override
 	public void remove(Education education) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.remove(education);
+        closeTransactionSesstion();
 	}
 
 }

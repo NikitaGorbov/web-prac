@@ -1,24 +1,24 @@
 package service;
 
-import bl.HibernateUtil;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+
 import bl.SessionUtil;
 import dao.VacancyDAO;
-import entity.Previous_job_record;
+import entity.Cv;
 import entity.Vacancy;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import org.hibernate.query.Query;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VacancyService extends SessionUtil implements VacancyDAO {
 
-	
-    public void add(Vacancy vacancy) throws SQLException {
+
+    @Override
+	public void add(Vacancy vacancy) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -31,8 +31,13 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 
 	@Override
 	public List<Vacancy> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Vacancy> criteria = builder.createQuery(Vacancy.class);
+	    criteria.from(Vacancy.class);
+	    List<Vacancy> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 	@Override
@@ -41,7 +46,7 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 		Session session = null;
 		try {
 			session = openSession();
-			vacancy = (Vacancy) session.get(Vacancy.class, id);
+			vacancy = session.get(Vacancy.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +59,32 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 
 	@Override
 	public void update(Vacancy vacancy) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.update(vacancy);
+        closeTransactionSesstion();
 	}
 
 	@Override
 	public void remove(Vacancy vacancy) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.remove(vacancy);
+        closeTransactionSesstion();
+	}
+
+	public List<Cv> getRelevantCvs(Vacancy vacancy) {
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Cv> criteria = builder.createQuery(Cv.class);
+	    Root<Cv> root = criteria.from(Cv.class);
+	    criteria.select(root);
+	    criteria.where(builder.ge(root.get("work_exp"), vacancy.getExp_required()),
+	    			   builder.le(root.get("desired_salary"), vacancy.getSalary()),
+	    			   builder.equal(root.get("objective").get("pos_id"), vacancy.getPosition().getPos_id()));
+	    List<Cv> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 }

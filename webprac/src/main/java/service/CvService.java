@@ -1,24 +1,24 @@
 package service;
 
-import bl.HibernateUtil;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+
 import bl.SessionUtil;
 import dao.CvDAO;
-import entity.Company;
 import entity.Cv;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import org.hibernate.query.Query;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import entity.Vacancy;
 
 public class CvService extends SessionUtil implements CvDAO {
 
-	
-    public void add(Cv cv) throws SQLException {
+
+    @Override
+	public void add(Cv cv) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -31,8 +31,13 @@ public class CvService extends SessionUtil implements CvDAO {
 
 	@Override
 	public List<Cv> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Cv> criteria = builder.createQuery(Cv.class);
+	    criteria.from(Cv.class);
+	    List<Cv> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 	@Override
@@ -41,7 +46,7 @@ public class CvService extends SessionUtil implements CvDAO {
 		Session session = null;
 		try {
 			session = openSession();
-			cv = (Cv) session.get(Cv.class, id);
+			cv = session.get(Cv.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +59,32 @@ public class CvService extends SessionUtil implements CvDAO {
 
 	@Override
 	public void update(Cv cv) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.update(cv);
+        closeTransactionSesstion();
 	}
 
 	@Override
 	public void remove(Cv cv) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.remove(cv);
+        closeTransactionSesstion();
+	}
+	
+	public List<Vacancy> getRelevantVacancies(Cv cv) {
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Vacancy> criteria = builder.createQuery(Vacancy.class);
+	    Root<Vacancy> root = criteria.from(Vacancy.class);
+	    criteria.select(root);
+	    criteria.where(builder.le(root.get("exp_required"), cv.getWork_exp()),
+	    			   builder.ge(root.get("salary"), cv.getDesired_salary()),
+	    			   builder.equal(root.get("position").get("pos_id"), cv.getObjective().getPos_id()));
+	    List<Vacancy> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 }

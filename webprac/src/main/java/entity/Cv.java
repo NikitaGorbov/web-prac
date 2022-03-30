@@ -4,8 +4,8 @@ public class Cv {
 	private Long cv_id;
 	private int work_exp;
 	private Applicant applicant;
-	private Position position;
-	private Long objective;
+	private Position objective;
+	private int desired_salary;
 	
 	public Cv() {
 		
@@ -35,20 +35,28 @@ public class Cv {
 		this.applicant = applicant;
 	}
 
-	public Position getPosition() {
-		return position;
-	}
+//	public Position getPosition() {
+//		return position;
+//	}
+//
+//	public void setPosition(Position position) {
+//		this.position = position;
+//	}
 
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-
-	public Long getObjective() {
+	public Position getObjective() {
 		return objective;
 	}
 
-	public void setObjective(Long objective) {
+	public void setObjective(Position objective) {
 		this.objective = objective;
+	}
+
+	public int getDesired_salary() {
+		return desired_salary;
+	}
+
+	public void setDesired_salary(int desired_salary) {
+		this.desired_salary = desired_salary;
 	}
 
 	@Override

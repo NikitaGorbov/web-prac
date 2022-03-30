@@ -16,5 +16,11 @@
         <property name="requirements" type="string">
             <column name="requirements" length="255" not-null="true" />
         </property>
+        <property name="salary" type="int">
+            <column name="salary" length="255" not-null="true" />
+        </property>
+        <property name="exp_required" type="int">
+            <column name="exp_required" length="255" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -1,24 +1,22 @@
 package service;
 
-import bl.HibernateUtil;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Session;
+
 import bl.SessionUtil;
 import dao.CompanyDAO;
-import entity.Applicant;
 import entity.Company;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import org.hibernate.query.Query;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CompanyService extends SessionUtil implements CompanyDAO {
 
-	
-    public void add(Company company) throws SQLException {
+
+    @Override
+	public void add(Company company) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -31,8 +29,13 @@ public class CompanyService extends SessionUtil implements CompanyDAO {
 
 	@Override
 	public List<Company> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Company> criteria = builder.createQuery(Company.class);
+	    criteria.from(Company.class);
+	    List<Company> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class CompanyService extends SessionUtil implements CompanyDAO {
 		Session session = null;
 		try {
 			session = openSession();
-			company = (Company) session.get(Company.class, id);
+			company = session.get(Company.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +57,18 @@ public class CompanyService extends SessionUtil implements CompanyDAO {
 
 	@Override
 	public void update(Company company) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.update(company);
+        closeTransactionSesstion();
 	}
 
 	@Override
 	public void remove(Company company) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.remove(company);
+        closeTransactionSesstion();
 	}
 
 }

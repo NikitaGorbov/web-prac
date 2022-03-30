@@ -1,10 +1,12 @@
 package entity;
 
 public class Vacancy {
-	private int vac_id;
+	private long vac_id;
 	private String requirements;
 	private Company company;
 	private Position position;
+	private int salary;
+	private int exp_required;
 	
 	public Vacancy() {
 		
@@ -16,11 +18,11 @@ public class Vacancy {
 				+ position + "]";
 	}
 
-	public int getVac_id() {
+	public long getVac_id() {
 		return vac_id;
 	}
 
-	public void setVac_id(int vac_id) {
+	public void setVac_id(long vac_id) {
 		this.vac_id = vac_id;
 	}
 
@@ -46,5 +48,21 @@ public class Vacancy {
 
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	public int getSalary() {
+		return salary;
+	}
+
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+
+	public int getExp_required() {
+		return exp_required;
+	}
+
+	public void setExp_required(int exp_required) {
+		this.exp_required = exp_required;
 	}
 }

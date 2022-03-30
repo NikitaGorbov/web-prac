@@ -1,24 +1,22 @@
 package service;
 
-import bl.HibernateUtil;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Session;
+
 import bl.SessionUtil;
 import dao.PositionDAO;
-import entity.Education;
 import entity.Position;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
-import org.hibernate.query.Query;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PositionService extends SessionUtil implements PositionDAO {
 
-	
-    public void add(Position position) throws SQLException {
+
+    @Override
+	public void add(Position position) throws SQLException {
         //open session with a transaction
         openTransactionSession();
 
@@ -31,8 +29,13 @@ public class PositionService extends SessionUtil implements PositionDAO {
 
 	@Override
 	public List<Position> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = openSession();
+	    CriteriaBuilder builder = session.getCriteriaBuilder();
+	    CriteriaQuery<Position> criteria = builder.createQuery(Position.class);
+	    criteria.from(Position.class);
+	    List<Position> data = session.createQuery(criteria).getResultList();
+	    session.close();
+	    return data;
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class PositionService extends SessionUtil implements PositionDAO {
 		Session session = null;
 		try {
 			session = openSession();
-			position = (Position) session.get(Position.class, id);
+			position = session.get(Position.class, id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,14 +57,18 @@ public class PositionService extends SessionUtil implements PositionDAO {
 
 	@Override
 	public void update(Position position) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.update(position);
+        closeTransactionSesstion();
 	}
 
 	@Override
 	public void remove(Position position) {
-		// TODO Auto-generated method stub
-		
+        openTransactionSession();
+        Session session = getSession();
+        session.remove(position);
+        closeTransactionSesstion();
 	}
 
 }
