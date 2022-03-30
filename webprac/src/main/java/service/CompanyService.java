@@ -45,8 +45,6 @@ public class CompanyService extends SessionUtil implements CompanyDAO {
 		try {
 			session = openSession();
 			company = session.get(Company.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();

@@ -51,8 +51,6 @@ public class ApplicantService extends SessionUtil implements ApplicantDAO {
 		try {
 			session = openSession();
 			applicant = session.get(Applicant.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();

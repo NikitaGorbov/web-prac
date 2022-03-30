@@ -45,8 +45,6 @@ public class PositionService extends SessionUtil implements PositionDAO {
 		try {
 			session = openSession();
 			position = session.get(Position.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();

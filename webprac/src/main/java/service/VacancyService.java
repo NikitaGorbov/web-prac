@@ -47,8 +47,6 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 		try {
 			session = openSession();
 			vacancy = session.get(Vacancy.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();

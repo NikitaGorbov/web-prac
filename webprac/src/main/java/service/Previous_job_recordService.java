@@ -45,8 +45,6 @@ public class Previous_job_recordService extends SessionUtil implements Previous_
 		try {
 			session = openSession();
 			previous_job_record = session.get(Previous_job_record.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();

@@ -45,8 +45,6 @@ public class EducationService extends SessionUtil implements EducationDAO {
 		try {
 			session = openSession();
 			education = session.get(Education.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();

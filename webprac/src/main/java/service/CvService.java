@@ -47,8 +47,6 @@ public class CvService extends SessionUtil implements CvDAO {
 		try {
 			session = openSession();
 			cv = session.get(Cv.class, id);
-		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();
