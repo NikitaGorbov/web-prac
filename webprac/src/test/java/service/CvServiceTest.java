@@ -92,7 +92,7 @@ class CvServiceTest {
         assertEquals(1, cvs.size());
         assertEquals(1, cvs.get(0).getWork_exp());
 	}
-	
+
 	@Test
 	void testGetRelevantVacancies() throws SQLException {
 		CompanyService compService = new CompanyService();

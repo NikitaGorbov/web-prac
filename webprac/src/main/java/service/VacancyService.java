@@ -3,11 +3,10 @@ package service;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import bl.SessionUtil;
 import dao.VacancyDAO;
@@ -29,16 +28,14 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
         closeTransactionSesstion();
     }
 
-	@Override
-	public List<Vacancy> getAll() {
-		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Vacancy> criteria = builder.createQuery(Vacancy.class);
-	    criteria.from(Vacancy.class);
-	    List<Vacancy> data = session.createQuery(criteria).getResultList();
-	    session.close();
-	    return data;
-	}
+    @Override
+    public List<Vacancy> getAll() {
+    	Session session = openSession();
+        Criteria criteria = session.createCriteria(Vacancy.class);
+        List<Vacancy> data = criteria.list();
+        session.close();
+        return data;
+    }
 
 	@Override
 	public Vacancy getById(Long id) {
@@ -73,14 +70,18 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 
 	public List<Cv> getRelevantCvs(Vacancy vacancy) {
 		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Cv> criteria = builder.createQuery(Cv.class);
-	    Root<Cv> root = criteria.from(Cv.class);
-	    criteria.select(root);
-	    criteria.where(builder.ge(root.get("work_exp"), vacancy.getExp_required()),
-	    			   builder.le(root.get("desired_salary"), vacancy.getSalary()),
-	    			   builder.equal(root.get("objective").get("pos_id"), vacancy.getPosition().getPos_id()));
-	    List<Cv> data = session.createQuery(criteria).getResultList();
+	    //CriteriaBuilder builder = session.getCriteriaBuilder();
+		Criterion rest1 = Restrictions.ge("work_exp", vacancy.getExp_required());
+		Criterion rest2 = Restrictions.le("desired_salary", vacancy.getSalary());
+		Criterion rest3 = Restrictions.eq("objective", vacancy.getPosition());
+	    Criteria criteria = session.createCriteria(Cv.class).add(Restrictions.and(rest1, rest2, rest3));
+//	    CriteriaQuery<Cv> criteria = builder.createQuery(Cv.class);
+//	    Root<Cv> root = criteria.from(Cv.class);
+//	    criteria.select(root);
+//	    criteria.where(builder.ge(root.get("work_exp"), vacancy.getExp_required()),
+//	    			   builder.le(root.get("desired_salary"), vacancy.getSalary()),
+//	    			   builder.equal(root.get("objective").get("pos_id"), vacancy.getPosition().getPos_id()));
+	    List<Cv> data = criteria.list();
 	    session.close();
 	    return data;
 	}

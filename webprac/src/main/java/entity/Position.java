@@ -8,9 +8,9 @@ public class Position {
 	private Set<Cv> cvs;
 	private Set<Vacancy> vacancies;
 	private Set<Previous_job_record> previous_job_records;
-	
+
 	public Position() {
-		
+
 	}
 
 	@Override

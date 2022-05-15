@@ -2,6 +2,7 @@ package entity;
 
 import java.util.Set;
 
+
 public class Applicant {
 	private Long appl_id;
 	private String appl_name;
@@ -10,9 +11,9 @@ public class Applicant {
 	private Education education;
 	private Set<Cv> cvs;
 	private Set<Previous_job_record> previous_job_records;
-	
+
 	public Applicant() {
-		
+
 	}
 
 	public Long getAppl_id() {
@@ -76,5 +77,5 @@ public class Applicant {
 	public void setPrevious_job_records(Set<Previous_job_record> previous_job_records) {
 		this.previous_job_records = previous_job_records;
 	}
-	
+
 }

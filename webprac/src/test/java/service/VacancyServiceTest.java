@@ -93,7 +93,7 @@ class VacancyServiceTest {
         assertEquals(1, vacs.size());
         assertEquals("None", vacs.get(0).getRequirements());
 	}
-	
+
 	@Test
 	void testGetRelevantCvs() throws SQLException {
 		CompanyService compService = new CompanyService();

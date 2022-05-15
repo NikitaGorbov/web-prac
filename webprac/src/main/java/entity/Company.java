@@ -9,9 +9,9 @@ public class Company {
 	private String location;
 	private Set<Vacancy> vacancies;
 	private Set<Previous_job_record> previous_job_records;
-	
+
 	public Company() {
-		
+
 	}
 
 	public Long getComp_id() {

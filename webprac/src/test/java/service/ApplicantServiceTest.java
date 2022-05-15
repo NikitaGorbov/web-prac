@@ -100,7 +100,7 @@ class ApplicantServiceTest {
       assertEquals(1, appls.size());
       assertEquals("John Smith", appls.get(0).getAppl_name());
 	}
-	
+
 	@Test
 	void testGetPrevCompanies() throws SQLException {
 		CompanyService compService = new CompanyService();

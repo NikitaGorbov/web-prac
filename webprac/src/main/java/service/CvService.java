@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import bl.SessionUtil;
@@ -29,16 +30,14 @@ public class CvService extends SessionUtil implements CvDAO {
         closeTransactionSesstion();
     }
 
-	@Override
-	public List<Cv> getAll() {
-		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Cv> criteria = builder.createQuery(Cv.class);
-	    criteria.from(Cv.class);
-	    List<Cv> data = session.createQuery(criteria).getResultList();
-	    session.close();
-	    return data;
-	}
+    @Override
+    public List<Cv> getAll() {
+    	Session session = openSession();
+        Criteria criteria = session.createCriteria(Cv.class);
+        List<Cv> data = criteria.list();
+        session.close();
+        return data;
+    }
 
 	@Override
 	public Cv getById(Long id) {
@@ -70,7 +69,7 @@ public class CvService extends SessionUtil implements CvDAO {
         session.remove(cv);
         closeTransactionSesstion();
 	}
-	
+
 	public List<Vacancy> getRelevantVacancies(Cv cv) {
 		Session session = openSession();
 	    CriteriaBuilder builder = session.getCriteriaBuilder();

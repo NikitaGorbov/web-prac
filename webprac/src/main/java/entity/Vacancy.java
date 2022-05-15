@@ -7,9 +7,9 @@ public class Vacancy {
 	private Position position;
 	private int salary;
 	private int exp_required;
-	
+
 	public Vacancy() {
-		
+
 	}
 
 	@Override

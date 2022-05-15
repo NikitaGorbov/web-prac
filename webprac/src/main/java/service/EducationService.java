@@ -3,9 +3,7 @@ package service;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import bl.SessionUtil;
@@ -27,16 +25,14 @@ public class EducationService extends SessionUtil implements EducationDAO {
         closeTransactionSesstion();
     }
 
-	@Override
-	public List<Education> getAll() {
-		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Education> criteria = builder.createQuery(Education.class);
-	    criteria.from(Education.class);
-	    List<Education> data = session.createQuery(criteria).getResultList();
-	    session.close();
-	    return data;
-	}
+    @Override
+    public List<Education> getAll() {
+    	Session session = openSession();
+        Criteria criteria = session.createCriteria(Education.class);
+        List<Education> data = criteria.list();
+        session.close();
+        return data;
+    }
 
 	@Override
 	public Education getById(Long id) {

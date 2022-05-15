@@ -6,9 +6,9 @@ public class Previous_job_record {
 	private Applicant applicant;
 	private Company company;
 	private Position position;
-	
+
 	public Previous_job_record() {
-		
+
 	}
 
 	public Long getPrev_job_record_id() {
@@ -55,5 +55,5 @@ public class Previous_job_record {
 	public String toString() {
 		return "Previous_job_record [prev_job_record_id=" + prev_job_record_id + ", duration=" + duration + "]";
 	}
-	
+
 }

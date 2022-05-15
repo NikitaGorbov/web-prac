@@ -6,11 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 
 import bl.SessionUtil;
 import dao.ApplicantDAO;
@@ -33,16 +32,14 @@ public class ApplicantService extends SessionUtil implements ApplicantDAO {
         closeTransactionSesstion();
     }
 
-	@Override
-	public List<Applicant> getAll() {
-		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Applicant> criteria = builder.createQuery(Applicant.class);
-	    criteria.from(Applicant.class);
-	    List<Applicant> data = session.createQuery(criteria).getResultList();
-	    session.close();
-	    return data;
-	}
+    @Override
+    public List<Applicant> getAll() {
+    	Session session = openSession();
+        Criteria criteria = session.createCriteria(Applicant.class).addOrder(Order.asc("appl_name"));
+        List<Applicant> data = criteria.list();
+        //session.close();
+        return data;
+    }
 
 	@Override
 	public Applicant getById(Long id) {

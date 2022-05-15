@@ -5,11 +5,19 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
         try {
-            return new Configuration().configure().buildSessionFactory();
+           //return new Configuration().configure().buildSessionFactory();
+
+        	Configuration configuration = new Configuration();
+        	configuration.configure("hibernate.cfg.xml");
+        	configuration.addResource("Applicant.hbm.xml");
+            configuration.addAnnotatedClass(entity.Education.class);
+            return configuration.buildSessionFactory();
+
+
         }
         catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);

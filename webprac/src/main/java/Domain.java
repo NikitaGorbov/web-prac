@@ -1,22 +1,11 @@
+import java.sql.SQLException;
+
 import bl.HibernateUtil;
-import entity.Applicant;
-import entity.Company;
-import entity.Cv;
 import entity.Position;
-import entity.Previous_job_record;
-import entity.Vacancy;
 import service.ApplicantService;
 import service.CompanyService;
 import service.PositionService;
 import service.VacancyService;
-
-import java.sql.SQLException;
-import java.util.*;
-
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 public class Domain {
 

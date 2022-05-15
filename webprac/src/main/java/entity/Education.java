@@ -6,9 +6,9 @@ public class Education {
 	private Long ed_id;
 	private String name;
 	private Set<Applicant> applicants;
-	
+
 	public Education() {
-		
+
 	}
 
 	public Long getEd_id() {
@@ -39,5 +39,5 @@ public class Education {
 	public void setApplicants(Set<Applicant> applicants) {
 		this.applicants = applicants;
 	}
-	
+
 }

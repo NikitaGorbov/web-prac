@@ -6,9 +6,9 @@ public class Cv {
 	private Applicant applicant;
 	private Position objective;
 	private int desired_salary;
-	
+
 	public Cv() {
-		
+
 	}
 
 	public Long getCv_id() {
@@ -64,5 +64,5 @@ public class Cv {
 		return "Cv [cv_id=" + cv_id + ", work_exp=" + work_exp
 				+ "]";
 	}
-	
+
 }

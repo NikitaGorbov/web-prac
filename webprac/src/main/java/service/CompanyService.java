@@ -3,9 +3,7 @@ package service;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import bl.SessionUtil;
@@ -27,16 +25,14 @@ public class CompanyService extends SessionUtil implements CompanyDAO {
         closeTransactionSesstion();
     }
 
-	@Override
-	public List<Company> getAll() {
-		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Company> criteria = builder.createQuery(Company.class);
-	    criteria.from(Company.class);
-	    List<Company> data = session.createQuery(criteria).getResultList();
-	    session.close();
-	    return data;
-	}
+    @Override
+    public List<Company> getAll() {
+    	Session session = openSession();
+        Criteria criteria = session.createCriteria(Company.class);
+        List<Company> data = criteria.list();
+        session.close();
+        return data;
+    }
 
 	@Override
 	public Company getById(Long id) {

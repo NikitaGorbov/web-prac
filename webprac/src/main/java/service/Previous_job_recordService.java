@@ -3,9 +3,7 @@ package service;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 import bl.SessionUtil;
@@ -27,16 +25,14 @@ public class Previous_job_recordService extends SessionUtil implements Previous_
         closeTransactionSesstion();
     }
 
-	@Override
-	public List<Previous_job_record> getAll() {
-		Session session = openSession();
-	    CriteriaBuilder builder = session.getCriteriaBuilder();
-	    CriteriaQuery<Previous_job_record> criteria = builder.createQuery(Previous_job_record.class);
-	    criteria.from(Previous_job_record.class);
-	    List<Previous_job_record> data = session.createQuery(criteria).getResultList();
-	    session.close();
-	    return data;
-	}
+    @Override
+    public List<Previous_job_record> getAll() {
+    	Session session = openSession();
+        Criteria criteria = session.createCriteria(Previous_job_record.class);
+        List<Previous_job_record> data = criteria.list();
+        session.close();
+        return data;
+    }
 
 	@Override
 	public Previous_job_record getById(Long id) {
