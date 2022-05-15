@@ -30,7 +30,6 @@ public class ApplicantController {
 
     @PostMapping("/applicantListAdd")
     public String add(@RequestParam("applName") String name, @RequestParam("applEd") long edId, @RequestParam("applStatus") String status, @RequestParam("applAddress") String address) throws SQLException {
-    	System.out.println(name);
     	Applicant appl = new Applicant();
     	Education ed = edService.getById(edId);
     	appl.setAppl_name(name);
@@ -65,7 +64,6 @@ public class ApplicantController {
 
     @GetMapping("/viewAppl")
     public String view(@RequestParam(name = "id") long id, Model model) throws SQLException {
-    	System.out.println(id);
     	Applicant appl = applService.getById(id);
     	model.addAttribute("applicant", appl);
     	Set<Cv> cvs = appl.getCvs();
