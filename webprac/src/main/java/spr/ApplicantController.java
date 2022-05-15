@@ -66,8 +66,6 @@ public class ApplicantController {
     public String view(@RequestParam(name = "id") long id, Model model) throws SQLException {
     	Applicant appl = applService.getById(id);
     	model.addAttribute("applicant", appl);
-    	Set<Cv> cvs = appl.getCvs();
-    	System.out.println(cvs.size());
     	return "/viewApplicant.jsp";
     }
 }
