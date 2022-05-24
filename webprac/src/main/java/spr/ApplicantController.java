@@ -38,12 +38,11 @@ public class ApplicantController {
     	appl.setAddress(address);
     	applService.add(appl);
 
-    	return "redirect:/applicantList";
+    	return ("redirect:/viewAppl?id=" + appl.getAppl_id().toString());
     }
 
     @GetMapping("/deleteAppl")
     public String delete(@RequestParam(name = "id") long id) throws SQLException {
-    	System.out.println(id);
     	Applicant appl = applService.getById(id);
     	applService.remove(appl);
     	return "redirect:/applicantList";
@@ -51,7 +50,6 @@ public class ApplicantController {
 
     @PostMapping("/applicantEdit")
     public String edit(@RequestParam(name = "applId") long id, @RequestParam(name = "applName") String name, @RequestParam("applEd") long edId, @RequestParam("applStatus") String status, @RequestParam("applAddress") String address) throws SQLException {
-    	System.out.println(id);
     	Applicant appl = applService.getById(id);
     	Education ed = edService.getById(edId);
     	appl.setAppl_name(name);
@@ -59,7 +57,7 @@ public class ApplicantController {
     	appl.setAddress(address);
     	appl.setStatus(status);
     	applService.update(appl);
-    	return "redirect:/applicantList";
+    	return ("redirect:/viewAppl?id=" + appl.getAppl_id().toString());
     }
 
     @GetMapping("/viewAppl")
@@ -67,5 +65,13 @@ public class ApplicantController {
     	Applicant appl = applService.getById(id);
     	model.addAttribute("applicant", appl);
     	return "/viewApplicant.jsp";
+    }
+
+    @GetMapping("/applCvs")
+    public String viewCvList(@RequestParam(name = "id") long id, Model model) throws SQLException {
+    	Applicant appl = applService.getById(id);
+    	Set<Cv> cvs = appl.getCvs();
+    	model.addAttribute("cvs" ,cvs);
+    	return "/cvList.jsp";
     }
 }

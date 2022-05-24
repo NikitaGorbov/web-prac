@@ -13,7 +13,6 @@ public class HibernateUtil {
 
         	Configuration configuration = new Configuration();
         	configuration.configure("hibernate.cfg.xml");
-        	configuration.addResource("Applicant.hbm.xml");
             configuration.addAnnotatedClass(entity.Education.class);
             return configuration.buildSessionFactory();
 

@@ -75,12 +75,6 @@ public class VacancyService extends SessionUtil implements VacancyDAO {
 		Criterion rest2 = Restrictions.le("desired_salary", vacancy.getSalary());
 		Criterion rest3 = Restrictions.eq("objective", vacancy.getPosition());
 	    Criteria criteria = session.createCriteria(Cv.class).add(Restrictions.and(rest1, rest2, rest3));
-//	    CriteriaQuery<Cv> criteria = builder.createQuery(Cv.class);
-//	    Root<Cv> root = criteria.from(Cv.class);
-//	    criteria.select(root);
-//	    criteria.where(builder.ge(root.get("work_exp"), vacancy.getExp_required()),
-//	    			   builder.le(root.get("desired_salary"), vacancy.getSalary()),
-//	    			   builder.equal(root.get("objective").get("pos_id"), vacancy.getPosition().getPos_id()));
 	    List<Cv> data = criteria.list();
 	    session.close();
 	    return data;

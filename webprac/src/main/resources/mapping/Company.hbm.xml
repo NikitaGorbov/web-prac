@@ -16,6 +16,12 @@
         <property name="location" type="string">
             <column name="location" length="255" not-null="true" />
         </property>
+        <set name = "vacancies" table="Vacancy" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="comp_id" not-null="true" />
+        	</key>
+        	<one-to-many class="entity.Vacancy" />
+        </set>
         <set name = "previous_job_records" table="Previous_job_record" inverse="true" lazy="true" fetch="select">
         	<key>
         		<column name="comp_id" not-null="true" />

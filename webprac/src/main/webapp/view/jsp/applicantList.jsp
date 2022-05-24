@@ -20,11 +20,15 @@
         <li><label>Education:</label> <input type='text' name='applEd' /></li>
         <li><label>Status:</label> <input type='text' name='applStatus' /></li>
         <li><label>Address:</label> <input type='text' name='applAddress' /></li>
-        <li><label>&nbsp;</label> <input type="submit" value="OK" class="btn"></li>
+        <li><label>&nbsp;</label> <input type="submit" value="OK" class="btn" id="addApplButton"></li>
     </ul>
 </form>
 
 <h2>List of all applicants</h2>
+<p>Total applicants number:</p>
+<p id="applListSize">
+${applicants.size()}
+</p>
 <table cellspacing="2" border="1" cellpadding="5" width="720">
     <tr>
         <th>Name</th>
@@ -34,6 +38,7 @@
         <th></th>
     </tr>
     <c:forEach var="applicant" items="${applicants}">
+    
     <tr>
         <td>
             <c:out value="${applicant.getAppl_name()}" />
@@ -50,7 +55,6 @@
         <td>
         	<a href = "viewAppl?id=${applicant.getAppl_id()}">view</a> /
             <a href = "deleteAppl?id=${applicant.getAppl_id()}">delete</a>
-            
         </td>
     </tr>
     </c:forEach>

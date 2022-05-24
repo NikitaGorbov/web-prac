@@ -12,7 +12,9 @@
 </head>
 <body>
 <h2>View applicant's CVs:</h2>
-<a href = "LINK_TO_CVS">List of CVs</a>
+<a href = "applCvs?id=${applicant.getAppl_id()}">List of CVs</a>
+<h2>View applicant's job records:</h2>
+<a href = "prevJobRecList?id=${applicant.getAppl_id()}">List of records</a>
 <h2>Edit applicant:</h2>
 <p>
 
@@ -23,7 +25,7 @@
         <li><label>Education:</label> <input type='text' name='applEd' value="${applicant.getEducation().getEd_id()}" /></li>
         <li><label>Status:</label> <input type='text' name='applStatus' value="${applicant.getStatus()}" /></li>
         <li><label>Address:</label> <input type='text' name='applAddress' value="${applicant.getAddress()}" /></li>
-        <li><label>&nbsp;</label> <input type="submit" value="Save" class="btn"></li>
+        <li><label>&nbsp;</label> <input type="submit" value="Save" class="btn" id="saveButton"></li>
     </ul>
 </form>
 

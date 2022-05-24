@@ -16,6 +16,12 @@
         	</key>
         	<one-to-many class="entity.Cv" />
         </set>
+        <set name = "vacancies" table="Vacancy" inverse="true" lazy="true" fetch="select">
+        	<key>
+        		<column name="pos_id" not-null="true" />
+        	</key>
+        	<one-to-many class="entity.Vacancy" />
+        </set>
         <set name = "previous_job_records" table="Previous_job_record" inverse="true" lazy="true" fetch="select">
         	<key>
         		<column name="pos_id" not-null="true" />
